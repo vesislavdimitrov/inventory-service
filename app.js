@@ -4,6 +4,7 @@ const Product = require('./model/Product');
 const server = express();
 const PORT = 3000;
 
+// yes, this is the database currently
 let products = [];
 
 server.use(express.json());
@@ -14,9 +15,7 @@ server.get('/products', (request, response) => {
 
 server.get('/products/:id', (request, response) => {
     const productId = request.params.id;
-    const product = products.find(
-        p => p.id === productId
-    );
+    const product = products.find(p => p.id === productId);
 
     if (!product) {
         response.status(404).json({error: 'Product not found'});
