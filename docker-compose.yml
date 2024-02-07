@@ -1,8 +1,40 @@
 services:
-  app:
-    build: .
-    command: node app.js --reload
+  server:
+    build:
+      context: .
+    environment:
+      NODE_ENV: production
+      POSTGRES_HOST: db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD_FILE: /run/secrets/db-password
+      POSTGRES_DB: inventory-service-db
     ports:
       - 3000:3000
+    depends_on:
+      db:
+        condition: service_healthy
+    secrets:
+      - db-password
+  db:
+    image: postgres
+    restart: always
+    user: postgres
+    secrets:
+      - db-password
     volumes:
-      - .:/app
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=inventory-service-db
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+    expose:
+      - 5432
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  db-data:
+secrets:
+  db-password:
+    file: db/password.txt
