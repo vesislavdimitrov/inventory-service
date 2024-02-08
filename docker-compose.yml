@@ -5,9 +5,9 @@ services:
     environment:
       NODE_ENV: production
       POSTGRES_HOST: db
-      POSTGRES_USER: admin
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD_FILE: /run/secrets/db-password
-      POSTGRES_DB: inventory-service-db
+      POSTGRES_DB: inventory_db
     ports:
       - 3000:3000
     depends_on:
@@ -24,7 +24,7 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=inventory-service-db
+      - POSTGRES_DB=inventory_db
       - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
     expose:
       - 5432
