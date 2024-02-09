@@ -4,10 +4,10 @@ services:
       context: .
     environment:
       NODE_ENV: production
-      POSTGRES_HOST: db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD_FILE: /run/secrets/db-password
-      POSTGRES_DB: inventory_db
+      MYSQL_HOST: db
+      MYSQL_USER: root
+      MYSQL_PASSWORD_FILE: /run/secrets/db-password
+      MYSQL_DATABASE: inventorydb
     ports:
       - 3000:3000
     depends_on:
@@ -16,20 +16,20 @@ services:
     secrets:
       - db-password
   db:
-    image: postgres
+    image: mysql
     restart: always
-    user: postgres
+    user: root
     secrets:
       - db-password
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data:/var/lib/mysql
     environment:
-      - POSTGRES_DB=inventory_db
-      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+      - MYSQL_DATABASE=inventorydb
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
     expose:
-      - 5432
+      - 3306
     healthcheck:
-      test: [ "CMD", "pg_isready" ]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
       retries: 5
