@@ -1,5 +1,6 @@
 {
   "name": "inventory-service",
+  "type": "module",
   "version": "1.0.0",
   "description": "Service that's supposed to be the inventory management component of a larger scale system or a standalone app.",
   "main": "app.js",
@@ -10,7 +11,9 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",
-    "pg": "^8.11.3",
+    "mysql2": "^3.9.1",
+    "sequelize": "^6.36.0",
+    "sequelize-cli": "^6.6.2",
     "uuid": "^9.0.1"
   }
 }

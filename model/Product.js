@@ -1,36 +1,48 @@
-const {v4: uuidv4} = require('uuid');
+import { DataTypes } from "sequelize";
+import sequelize from "../db/DbConnection.js";
 
-class Product {
-
-    #id;
-    #name;
-    #description;
-
-    constructor(name, description, id) {
-        this.#name = name;
-        this.#description = description;
-        this.#id = id || uuidv4();
+const Product = sequelize.define(
+    "Product",
+    {
+        id: {
+            type: DataTypes.UUID,
+            primaryKey: true,
+            allowNull: false,
+            defaultValue: DataTypes.UUIDV4,
+        },
+        serialNumber: {
+            type: DataTypes.STRING(14),
+            allowNull: false,
+        },
+        name: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+        },
+        isActive: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+        },
+        timestampCreated: {
+            type: DataTypes.BIGINT,
+            allowNull: false,
+        },
+        mahName: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+        },
+        quantity: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        expiryDate: {
+            type: DataTypes.BIGINT,
+            allowNull: true,
+        },
+    },
+    {
+        tableName: "product",
+        timestamps: false,
     }
+);
 
-    get id() {
-        return this.#id;
-    }
-
-    get name() {
-        return this.#name;
-    }
-
-    get description() {
-        return this.#description;
-    }
-
-    toJSON() {
-        return {
-            id: this.id,
-            name: this.name,
-            description: this.description
-        };
-    }
-}
-
-module.exports = Product;
+export default Product;

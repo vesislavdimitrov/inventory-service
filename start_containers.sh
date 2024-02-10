@@ -1,0 +1,3 @@
+# because these 2 commands separated by '&&' is apparently too long...
+docker image prune -a -f
+docker-compose up --build
