@@ -1,4 +1,5 @@
-const PRODUCT_NOT_FOUND_ERR = (productId) => `Product with ID ${productId} not found.`;
+const PRODUCT_NOT_FOUND_ERR = (productId) =>
+    `Product with ID ${productId} not found.`;
 
 class ProductNotFound extends Error {
 

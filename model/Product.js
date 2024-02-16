@@ -24,10 +24,12 @@ const Product = sequelize.define(
         isActive: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
+            defaultValue: false,
         },
         timestampCreated: {
             type: DataTypes.BIGINT,
             allowNull: false,
+            defaultValue: () => Date.now(),
         },
         mahName: {
             type: DataTypes.STRING(255),

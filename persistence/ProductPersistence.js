@@ -12,7 +12,7 @@ class ProductPersistence {
     }
 
     async getById(productId) {
-        const product =  await Product.findByPk(productId);
+        const product = await Product.findByPk(productId);
         this.#assertExists(product, productId);
         return product;
     }

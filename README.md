@@ -8,7 +8,7 @@ Before you dive into using the service, make sure you have the following prerequ
 
 - **Docker Installation:** Ensure that Docker is installed on your system.
 
-- **Create a 'db' folder:** In the root of your project, create a folder named 'db'. Inside this folder, add a file named 'password.txt'.
+- **Create a 'password' file:** Navigate to the folder named 'db' in the root of the project. Inside this folder, add a file named 'password.txt'.
 
   - **password.txt content:** The 'password.txt' file should contain just one line, which will serve as the password for your database.
 
