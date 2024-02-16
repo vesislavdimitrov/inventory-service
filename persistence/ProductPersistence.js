@@ -1,32 +1,39 @@
-import Product from '../model/Product.js';
+import Product from "../model/Product.js";
+import ProductNotFoundError from "./ProductNotFoundError.js";
 
 class ProductPersistence {
 
-    create(product) {
-        try {
-            console.log(product);
-            const createdProduct = Product.create(product);
-            return createdProduct;
-        } catch (error) {
-            console.error("Error creating product:", error);
-            throw error;
-        }
+    async create(product) {
+        return await Product.create(product);
     }
 
-    getById(productId) {
-        try {
-            const product = Product.findByPk(productId);
-            return product;
-        } catch (error) {
-            console.error("Error reading product by ID:", error);
-            throw error;
-        }
+    async getAll() {
+        return await Product.findAll();
     }
 
-    /**
-     * TODO
-     *  Probably gonna need to be able to update and delete ;)
-     */
+    async getById(productId) {
+        const product =  await Product.findByPk(productId);
+        this.#assertExists(product, productId);
+        return product;
+    }
+
+    async update(productId, updatedProductData) {
+        const product = await Product.findByPk(productId);
+        this.#assertExists(product, productId);
+        return await product.update(updatedProductData);
+    }
+
+    async delete(productId) {
+        const product = await Product.findByPk(productId);
+        this.#assertExists(product, productId);
+        await product.destroy();
+    }
+
+    #assertExists(product, id) {
+        if (!product) {
+            throw new ProductNotFoundError(id);
+        }
+    }
 }
 
 export default ProductPersistence;

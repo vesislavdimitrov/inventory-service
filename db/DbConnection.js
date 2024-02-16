@@ -1,18 +1,19 @@
 import { Sequelize } from "sequelize";
+import { join } from "path";
+import { readFile } from "../utils/FsUtils.js";
 
 class DbConnection {
-
-/**
- *  This class holds the instance of the only Sequelize object
- *  which is used for all the ORM operations
- * @returns {Sequelize} 
- */
+    /**
+     *  This class holds the instance of the only Sequelize object
+     *  which is used for all the ORM operations
+     * @returns {Sequelize} 
+     */
     constructor() {
         if (!DbConnection.instance) {
             this._sequelize = new Sequelize({
                 database: "inventorydb",
                 username: "root",
-                password: "<From the file>",
+                password: readFile(join(process.cwd(), 'db', 'password.txt'), 'utf-8').trim(),
                 host: "db",
                 dialect: "mysql",
             });
@@ -28,4 +29,3 @@ class DbConnection {
 
 const database = new DbConnection();
 export default database.sequelize;
-

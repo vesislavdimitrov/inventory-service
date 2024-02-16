@@ -1,8 +1,11 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/DbConnection.js";
 
+const OBJECT_NAME = "Product";
+const TABLE_NAME = "product";
+
 const Product = sequelize.define(
-    "Product",
+    OBJECT_NAME,
     {
         id: {
             type: DataTypes.UUID,
@@ -40,7 +43,7 @@ const Product = sequelize.define(
         },
     },
     {
-        tableName: "product",
+        tableName: TABLE_NAME,
         timestamps: false,
     }
 );
