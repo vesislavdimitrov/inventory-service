@@ -1,10 +1,11 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/DbConnection.js";
+import Product from "./Product.js";
 
-const OBJECT_NAME = "Product";
-const TABLE_NAME = "product";
+const OBJECT_NAME = "Order";
+const TABLE_NAME = "order";
 
-const Product = sequelize.define(
+const Order = sequelize.define(
     OBJECT_NAME,
     {
         id: {
@@ -13,35 +14,30 @@ const Product = sequelize.define(
             allowNull: false,
             defaultValue: DataTypes.UUIDV4,
         },
-        serialNumber: {
-            type: DataTypes.STRING(14),
+        productId: {
+            type: DataTypes.UUID,
             allowNull: false,
+            references: {
+                model: Product,
+                key: "id",
+            },
         },
-        name: {
-            type: DataTypes.STRING(255),
-            allowNull: false,
-        },
-        isActive: {
+        isAutomated: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
-            defaultValue: false,
         },
         timestampCreated: {
             type: DataTypes.BIGINT,
-            allowNull: false,
+            allowNull: true,
             defaultValue: () => Date.now(),
         },
-        mahName: {
+        warehouseName: {
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        quantity: {
-            type: DataTypes.INTEGER,
+        wareHouseLocation: {
+            type: DataTypes.STRING(255),
             allowNull: false,
-        },
-        expiryDate: {
-            type: DataTypes.BIGINT,
-            allowNull: true,
         },
     },
     {
@@ -49,6 +45,6 @@ const Product = sequelize.define(
         timestamps: false,
     }
 );
-Product.entityName = OBJECT_NAME;
+Order.entityName = OBJECT_NAME;
 
-export default Product;
+export default Order;

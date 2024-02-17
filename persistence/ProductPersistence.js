@@ -1,7 +1,7 @@
 import Product from "../model/Product.js";
-import ProductNotFoundError from "./ProductNotFoundError.js";
+import Persistence from "./Persistence.js";
 
-class ProductPersistence {
+class ProductPersistence extends Persistence {
 
     async create(product) {
         return await Product.create(product);
@@ -13,26 +13,20 @@ class ProductPersistence {
 
     async getById(productId) {
         const product = await Product.findByPk(productId);
-        this.#assertExists(product, productId);
+        this.assertExists(product, productId, Product.entityName);
         return product;
     }
 
     async update(productId, updatedProductData) {
         const product = await Product.findByPk(productId);
-        this.#assertExists(product, productId);
+        this.assertExists(product, productId, Product.entityName);
         return await product.update(updatedProductData);
     }
 
     async delete(productId) {
         const product = await Product.findByPk(productId);
-        this.#assertExists(product, productId);
+        this.assertExists(product, productId, Product.entityName);
         await product.destroy();
-    }
-
-    #assertExists(product, id) {
-        if (!product) {
-            throw new ProductNotFoundError(id);
-        }
     }
 }
 

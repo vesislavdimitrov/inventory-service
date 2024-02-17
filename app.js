@@ -3,12 +3,14 @@ import express from "express";
 import sequelize from "./db/DbConnection.js";
 import { readFile } from "./utils/FsUtils.js";
 import productResource from "./rest/ProductResource.js";
+import orderResource from "./rest/OrderResource.js"
 
 const app = express();
 const port = 3000;
 
 initializeDatabase().then(() => {
     app.use(productResource);
+    app.use(orderResource);
     app.listen(port, () => {
         console.log(`Server is running on port ${port}`);
     });
