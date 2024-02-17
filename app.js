@@ -17,8 +17,10 @@ initializeDatabase().then(() => {
 async function initializeDatabase() {
     try {
         await sequelize.authenticate();
-        await _executeInitScript();
-        console.log("Initialization complete");
+        if (!_necessaryTablesExist) {
+            await _executeInitScript();
+            console.log("Initialization complete");
+        }
     } catch (error) {
         console.error("Error initializing database:", error);
     }
@@ -43,6 +45,14 @@ async function _executeInitScript() {
             throw error;
         }
     }
+}
+
+async function _necessaryTablesExist() {
+    const allTables = await sequelize.getQueryInterface().showAllTables();
+    if (!allTables.includes("product") || !allTables.includes("order")) {
+        return false;
+    }
+    return true;
 }
 
 export default app;
