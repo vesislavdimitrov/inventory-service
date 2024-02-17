@@ -5,15 +5,24 @@
   "description": "Service that's supposed to be the inventory management component of a larger scale system or a standalone app.",
   "main": "app.js",
   "scripts": {
-    "test": "test"
+    "test": "jest"
   },
   "author": "V. Dimitrov, D. Balkadzhieva, Ts. Valchev, I. Raychev",
   "license": "MIT",
   "dependencies": {
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
     "express": "^4.18.2",
+    "jest": "^29.7.0",
     "mysql2": "^3.9.1",
     "sequelize": "^6.36.0",
     "sequelize-cli": "^6.6.2",
     "uuid": "^9.0.1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
   }
 }
