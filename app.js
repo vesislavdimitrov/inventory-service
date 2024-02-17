@@ -1,5 +1,7 @@
 import { join } from "path";
 import express from "express";
+import cors from "cors";
+
 import sequelize from "./db/DbConnection.js";
 import { readFile } from "./utils/FsUtils.js";
 import productResource from "./rest/ProductResource.js";
@@ -9,6 +11,7 @@ const app = express();
 const port = 3000;
 
 initializeDatabase().then(() => {
+    app.use(cors());
     app.use(productResource);
     app.use(orderResource);
     app.listen(port, () => {
