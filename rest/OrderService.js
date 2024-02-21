@@ -24,11 +24,11 @@ class OrderService {
     }
 
     async updateOrder(orderId, updatedOrder) {
-        return await this.#productPersistence.update(orderId, updatedOrder);
+        return await this.#orderPersistence.update(orderId, updatedOrder);
     }
 
     async deleteOrder(orderId) {
-        await this.#productPersistence.delete(orderId);
+        await this.#orderPersistence.delete(orderId);
     }
 
 }

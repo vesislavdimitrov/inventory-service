@@ -1,0 +1,73 @@
+{
+    "_version": "1.30.0",
+    "start_url": "index.html",
+    "sap.app": {
+        "id": "inventory",
+        "type": "application",
+        "title": "Inventory Service",
+        "description": "inventory?",
+        "applicationVersion": {
+            "version": "1.0.0"
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "dependencies": {
+            "minUI5Version": "1.90.0",
+            "libs": {
+                "sap.ui.unified": {},
+                "sap.ui.layout": {},
+                "sap.ui.core": {},
+                "sap.m": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "": {
+                "type": "sap.ui.model.json.JSONModel"
+            }
+        },
+        "rootView": {
+            "viewName": "inventory.view.App",
+            "id": "rootView",
+            "type": "JS",
+            "async": true,
+            "height": "100%",
+            "displayBlock": true
+        },
+        "routing": {
+            "routes": {
+                "home": {
+                    "pattern": "",
+                    "target": "home"
+                }
+            },
+            "targets": {
+                "home": {
+                    "name": "Home"
+                }
+            },
+            "config": {
+                "async": true,
+                "type": "View",
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "JS",
+                "path": "inventory.view",
+                "controlId": "rootApp",
+                "controlAggregation": "pages",
+                "transition": "slide",
+                "homeRoute": "home"
+            }
+        }
+    }
+}
