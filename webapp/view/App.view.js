@@ -1,5 +1,7 @@
 sap.ui.jsview("inventory.view.App", {
     createContent: function () {
-        return new sap.m.Shell({}).setApp(new sap.m.App("rootApp"));
+        return new sap.m.Shell({
+            backgroundImage: "utils/background.jpg",
+        }).setApp(new sap.m.App("rootApp"));
     },
 });
