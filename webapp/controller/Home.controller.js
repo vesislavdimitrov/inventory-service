@@ -9,24 +9,26 @@ sap.ui.define(
         "use strict";
 
         return Controller.extend("inventory.controller.Home", {
-            onInit: function () {
-
-            },
+            onInit: function () {},
 
             onClick: function () {
-              $.ajax({
-                  url: "http://localhost:3000/products",
-                  method: "GET",
-                  dataType: "json",
-                  success: function (data) {
-                      var oModel = new JSONModel(data);
-                      this.getView().setModel(oModel, "productModel");
-                  }.bind(this),
-                  error: function (error) {
-                      console.error("Error fetching data:", error);
-                  }
-              });
-          },
+                $.ajax({
+                    url: "http://localhost:3000/products",
+                    method: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        var oModel = new JSONModel(data);
+                        this.getView().setModel(oModel, "productModel");
+                    }.bind(this),
+                    error: function (error) {
+                        console.error("Error fetching data:", error);
+                    },
+                });
+            },
+
+            onAddProductPress: function () {
+                UIComponent.getRouterFor(this).navTo("addProduct");
+            },
         });
     }
 );

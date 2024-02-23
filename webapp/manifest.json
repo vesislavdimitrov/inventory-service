@@ -50,11 +50,18 @@
                 "home": {
                     "pattern": "",
                     "target": "home"
+                },
+                "addProduct": {
+                    "pattern": "add-product",
+                    "target": "addProduct"
                 }
             },
             "targets": {
                 "home": {
                     "name": "Home"
+                },
+                "addProduct": {
+                    "name": "AddProduct"
                 }
             },
             "config": {

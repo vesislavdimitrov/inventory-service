@@ -1,5 +1,6 @@
 jQuery.sap.require("inventory.utils.Constants");
 
+const IS_ACTIVE_COLUMN_TXT = "Active";
 const MANUFACTURER_COLUMN_TXT = "Manufacturer";
 const SERIAL_NUMBER_COLUMN_TXT = "Serial Number";
 const PRODUCT_NAME_COLUMN_TXT = "Product";
@@ -13,7 +14,7 @@ sap.ui.jsview("inventory.view.Home", {
     createContent: function (oController) {
         return this.createPage(
             this.createToolbar(oController),
-            this.createTable(oController)
+            this.createProductsTable(oController)
         );
     },
 
@@ -43,20 +44,22 @@ sap.ui.jsview("inventory.view.Home", {
                     "Products",
                     oController.onClick,
                     "sap-icon://product",
-                    "30rem"
+                    "30rem",
+                    sap.m.ButtonType.Emphasized
                 ),
                 this.createButton(
                     oController,
                     "Orders",
                     oController.onClick,
                     "sap-icon://shipping-status",
-                    "30rem"
+                    "30rem",
+                    sap.m.ButtonType.Emphasized
                 ),
             ],
         });
     },
 
-    createTable: function (oController) {
+    createProductsTable: function (oController) {
         return new sap.m.Table({
             id: "table",
             growing: true,
@@ -66,6 +69,7 @@ sap.ui.jsview("inventory.view.Home", {
                 path: "productModel>/",
                 template: new sap.m.ColumnListItem({
                     cells: [
+                        new sap.m.Text({ text: "{productModel>isActive}" }),
                         new sap.m.Text({ text: "{productModel>name}" }),
                         new sap.m.Text({ text: "{productModel>serialNumber}" }),
                         new sap.m.Text({ text: "{productModel>mahName}" }),
@@ -76,8 +80,8 @@ sap.ui.jsview("inventory.view.Home", {
                                     oController,
                                     undefined,
                                     oController.onClick,
-                                    "sap-icon://display",
-                                    "3rem"
+                                    "sap-icon://hint",
+                                    "3rem",
                                 ),
                                 this.createGap("0.3rem"),
                                 this.createButton(
@@ -86,7 +90,6 @@ sap.ui.jsview("inventory.view.Home", {
                                     oController.onClick,
                                     "sap-icon://edit",
                                     "3rem",
-                                    sap.m.ButtonType.Attention
                                 ),
                                 this.createGap("0.3rem"),
                                 this.createButton(
@@ -104,6 +107,10 @@ sap.ui.jsview("inventory.view.Home", {
             },
             columns: [
                 new sap.m.Column({
+                    header: new sap.m.Label({ text: IS_ACTIVE_COLUMN_TXT }),
+                    width: "3rem",
+                }),
+                new sap.m.Column({
                     header: new sap.m.Label({ text: PRODUCT_NAME_COLUMN_TXT }),
                     width: "3rem",
                 }),
@@ -120,6 +127,15 @@ sap.ui.jsview("inventory.view.Home", {
                     width: "2rem",
                 }),
                 new sap.m.Column({
+                    header: [
+                        this.createButton(
+                            oController,
+                            "New product",
+                            oController.onAddProductPress,
+                            "sap-icon://add-product",
+                            "9.6rem"
+                        )
+                    ],
                     width: "4rem",
                 }),
             ],
