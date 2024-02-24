@@ -4,13 +4,7 @@ sap.ui.define(
         "use strict";
 
         return {
-            sendAjaxRequestWith: function (
-                url,
-                method,
-                jsonData,
-                successCallback,
-                errorCallback
-            ) {
+            sendAjaxRequestWith: function (url, method, jsonData, successCallback, errorCallback) {
                 const busyDialog = Dialogs.createBusyDialog();
                 busyDialog.open();
 

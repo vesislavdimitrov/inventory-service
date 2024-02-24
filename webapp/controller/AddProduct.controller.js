@@ -7,14 +7,7 @@ sap.ui.define(
         "inventory/utils/Constants",
         "inventory/utils/Http",
     ],
-    function (
-        Controller,
-        MessageToast,
-        JSONModel,
-        UIComponent,
-        Constants,
-        Http
-    ) {
+    function (Controller, MessageToast, JSONModel, UIComponent, Constants, Http) {
         "use strict";
 
         return Controller.extend("inventory.controller.AddProduct", {
@@ -56,9 +49,7 @@ sap.ui.define(
                         that.navigateToHome();
                     },
                     function (error) {
-                        MessageToast.show(
-                            "Failed to add product. Please try again."
-                        );
+                        MessageToast.show("Failed to add product. Please try again.");
                         console.error("Error:", error); //no
                     }
                 );

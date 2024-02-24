@@ -12,10 +12,7 @@ sap.ui.jsview("inventory.view.Home", {
     },
 
     createContent: function (oController) {
-        return this.createPage(
-            this.createToolbar(oController),
-            this.createProductsTable(oController)
-        );
+        return this.createPage(this.createToolbar(oController), this.createProductsTable(oController));
     },
 
     createPage: function (oToolbar, oTable) {
@@ -81,7 +78,7 @@ sap.ui.jsview("inventory.view.Home", {
                                     undefined,
                                     oController.onClick,
                                     "sap-icon://hint",
-                                    "3rem",
+                                    "3rem"
                                 ),
                                 this.createGap("0.3rem"),
                                 this.createButton(
@@ -89,7 +86,7 @@ sap.ui.jsview("inventory.view.Home", {
                                     undefined,
                                     oController.onClick,
                                     "sap-icon://edit",
-                                    "3rem",
+                                    "3rem"
                                 ),
                                 this.createGap("0.3rem"),
                                 this.createButton(
@@ -134,7 +131,7 @@ sap.ui.jsview("inventory.view.Home", {
                             oController.onAddProductPress,
                             "sap-icon://add-product",
                             "9.6rem"
-                        )
+                        ),
                     ],
                     width: "4rem",
                 }),
@@ -142,14 +139,7 @@ sap.ui.jsview("inventory.view.Home", {
         });
     },
 
-    createButton: function (
-        oController,
-        sTitle,
-        fOnPress,
-        sIcon,
-        sSize,
-        oType
-    ) {
+    createButton: function (oController, sTitle, fOnPress, sIcon, sSize, oType) {
         return new sap.m.Button({
             icon: sIcon,
             text: sTitle,

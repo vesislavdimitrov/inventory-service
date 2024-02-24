@@ -19,35 +19,14 @@ sap.ui.jsview("inventory.view.AddProduct", {
         return this.createPage(
             this.createForm(
                 this.createInput("{/name}", INPUT_WIDTH, true),
-                this.createInput(
-                    "{/serialNumber}",
-                    INPUT_WIDTH,
-                    true,
-                    PLACEHOLDER_SERIAL_NUMBER
-                ),
+                this.createInput("{/serialNumber}", INPUT_WIDTH, true, PLACEHOLDER_SERIAL_NUMBER),
                 this.createInput("{/mahName}", INPUT_WIDTH, true),
                 this.createInput("{/quantity}", INPUT_WIDTH, true),
-                this.createDatePicker(
-                    "{/expiryDate}",
-                    INPUT_WIDTH,
-                    "yyyy-MM-dd",
-                    true,
-                    LABEL_EXPIRY_DATE
-                ),
+                this.createDatePicker("{/expiryDate}", INPUT_WIDTH, "yyyy-MM-dd", true, LABEL_EXPIRY_DATE),
                 this.createSwitch("{/isActive}", LABEL_ACTIVITY_STATE)
             ),
-            this.createButton(
-                oController,
-                ADD_BUTTON_TXT,
-                oController.onAddProductPress,
-                sap.m.ButtonType.Emphasized
-            ),
-            this.createButton(
-                oController,
-                CANCEL_BUTTON_TXT,
-                oController.navigateToHome,
-                sap.m.ButtonType.Reject
-            )
+            this.createButton(oController, ADD_BUTTON_TXT, oController.onAddProductPress, sap.m.ButtonType.Emphasized),
+            this.createButton(oController, CANCEL_BUTTON_TXT, oController.navigateToHome, sap.m.ButtonType.Reject)
         );
     },
 

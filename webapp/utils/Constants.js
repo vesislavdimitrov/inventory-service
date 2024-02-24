@@ -11,8 +11,7 @@ sap.ui.define(
             APP_TITLE: "Inventory Service",
             LOADING_TITLE: "Loading",
             LOADING_TEXT: "Please wait..",
-            DELETE_CONFIRMATION_MSG:
-                "Are you sure you want to delete this item?",
+            DELETE_CONFIRMATION_MSG: "Are you sure you want to delete this item?",
         };
     },
     true // exports the module
