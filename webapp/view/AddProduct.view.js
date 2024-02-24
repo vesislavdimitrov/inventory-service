@@ -1,4 +1,6 @@
 const PAGE_NAME_TXT = "Add a new product";
+const ADD_BUTTON_TXT = "Add product";
+const CANCEL_BUTTON_TXT = "Cancel";
 const LABEL_NAME = "Name";
 const LABEL_SERIAL_NUMBER = "Serial number";
 const PLACEHOLDER_SERIAL_NUMBER = "e.g. 123456789";
@@ -6,7 +8,7 @@ const LABEL_MANUFACTURER = "Manufacturer";
 const LABEL_QUANTITY = "Quantity";
 const LABEL_EXPIRY_DATE = "Expiry date";
 const LABEL_ACTIVITY_STATE = "Active";
-const INPUT_WIDTH = "20rem";
+const INPUT_WIDTH = "33rem";
 
 sap.ui.jsview("inventory.view.AddProduct", {
     getControllerName: function () {
@@ -34,14 +36,22 @@ sap.ui.jsview("inventory.view.AddProduct", {
                 ),
                 this.createSwitch("{/isActive}", LABEL_ACTIVITY_STATE)
             ),
-            new sap.m.Button({
-                text: "Add Product",
-                press: [oController.onAddProduct, oController],
-            })
+            this.createButton(
+                oController,
+                ADD_BUTTON_TXT,
+                oController.onAddProductPress,
+                sap.m.ButtonType.Emphasized
+            ),
+            this.createButton(
+                oController,
+                CANCEL_BUTTON_TXT,
+                oController.navigateToHome,
+                sap.m.ButtonType.Reject
+            )
         );
     },
 
-    createPage: function (oForm, oAddButton) {
+    createPage: function (oForm, oAddButton, oCancelButton) {
         return new sap.m.Page({
             title: PAGE_NAME_TXT,
             titleAlignment: sap.m.TitleAlignment.Center,
@@ -52,7 +62,7 @@ sap.ui.jsview("inventory.view.AddProduct", {
                     height: "100%",
                     width: "100%",
                     direction: "Column",
-                    items: [oForm, oAddButton],
+                    items: [oForm, oAddButton, oCancelButton],
                 }),
             ],
         });
@@ -108,6 +118,15 @@ sap.ui.jsview("inventory.view.AddProduct", {
             // THE EMOJI CODE DREAM ?!
             customTextOn: "✔️",
             customTextOff: "❌",
+        });
+    },
+
+    createButton: function (oController, sText, fOnPress, oType) {
+        return new sap.m.Button({
+            width: "10rem",
+            text: sText,
+            press: [fOnPress, oController],
+            type: oType,
         });
     },
 });

@@ -42,7 +42,7 @@ sap.ui.jsview("inventory.view.Home", {
                 this.createButton(
                     oController,
                     "Products",
-                    oController.onClick,
+                    oController.onLoadProducts,
                     "sap-icon://product",
                     "30rem",
                     sap.m.ButtonType.Emphasized
@@ -95,7 +95,7 @@ sap.ui.jsview("inventory.view.Home", {
                                 this.createButton(
                                     oController,
                                     undefined,
-                                    oController.onClick,
+                                    oController.onDeleteProductPress,
                                     "sap-icon://delete",
                                     "3rem",
                                     sap.m.ButtonType.Reject
