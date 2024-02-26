@@ -3,7 +3,7 @@ const ADD_BUTTON_TXT = "Add product";
 const CANCEL_BUTTON_TXT = "Cancel";
 const LABEL_NAME = "Name";
 const LABEL_SERIAL_NUMBER = "Serial number";
-const PLACEHOLDER_SERIAL_NUMBER = "e.g. 123456789";
+const PLACEHOLDER_QUANTITY = "Number";
 const LABEL_MANUFACTURER = "Manufacturer";
 const LABEL_QUANTITY = "Quantity";
 const LABEL_EXPIRY_DATE = "Expiry date";
@@ -19,9 +19,9 @@ sap.ui.jsview("inventory.view.AddProduct", {
         return this.createPage(
             this.createForm(
                 this.createInput("{/name}", INPUT_WIDTH, true),
-                this.createInput("{/serialNumber}", INPUT_WIDTH, true, PLACEHOLDER_SERIAL_NUMBER),
+                this.createInput("{/serialNumber}", INPUT_WIDTH, true),
                 this.createInput("{/mahName}", INPUT_WIDTH, true),
-                this.createInput("{/quantity}", INPUT_WIDTH, true),
+                this.createInput("{/quantity}", INPUT_WIDTH, true, PLACEHOLDER_QUANTITY, sap.m.InputType.Number),
                 this.createDatePicker("{/expiryDate}", INPUT_WIDTH, "yyyy-MM-dd", true, LABEL_EXPIRY_DATE),
                 this.createSwitch("{/isActive}", LABEL_ACTIVITY_STATE)
             ),
@@ -73,12 +73,13 @@ sap.ui.jsview("inventory.view.AddProduct", {
         });
     },
 
-    createInput: function (oValue, sWidth, bRequired, oPlaceholder) {
+    createInput: function (oValue, sWidth, bRequired, oPlaceholder, oType) {
         return new sap.m.Input({
             value: oValue,
             width: sWidth,
             required: bRequired,
             placeholder: oPlaceholder,
+            type: oType,
         });
     },
 
