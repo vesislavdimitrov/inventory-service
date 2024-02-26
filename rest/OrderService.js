@@ -3,7 +3,9 @@ import OrderPersistence from "../persistence/OrderPersistence.js";
 import IllegalArgumentError from "./IllegalArgumentError.js";
 
 const EMPTY_ARGUMENT_ERR = "Body contains an empty argument!";
-const INVALID_TIMESTAMP_ERR = "Timestamp create should be now!";
+const PRODUCT_NOT_ACTIVE_ERR = "Product is not active!";
+const INVALID_DELETE_AUTOMATED_ERR = "Order cannot be deleted if is automated";
+const INVALID_PRODUCT_EXIST = "Оrder cannot be created because product does not exists"
 
 class OrderService {
     #orderPersistence;
@@ -13,8 +15,9 @@ class OrderService {
     }
 
     async createOrder(order) {
+        this.#assertProductExist(order.productId);
         this.#assertNoEmptyArgs(order);
-        this.#assertValidTimestamp(order.timestampCreated);
+        this.#checkProductIsActive(order.productId);
         return await this.#orderPersistence.create(
             this.#buildOrderObject(order));
     }
@@ -23,7 +26,7 @@ class OrderService {
         return await this.#orderPersistence.getById(orderId);
     }
 
-    async getOrderByProductId(productId) {
+    async getOrdersByProductId(productId) {
         return await this.#orderPersistence.getByProductId(orderId);
     }
 
@@ -37,6 +40,7 @@ class OrderService {
     }
 
     async deleteOrder(orderId) {
+        this.#assertIsNotAutomated(orderId);
         await this.#orderPersistence.delete(orderId);
     }
 
@@ -56,12 +60,27 @@ class OrderService {
             throw new IllegalArgumentError(EMPTY_ARGUMENT_ERR);
         }
     }
-
-    #assertValidTimestamp(timestampCreated) {
-        if (timestampCreated != Date.now() / 1000) {
-            throw new IllegalArgumentError(INVALID_TIMESTAMP_ERR);
+    
+    #checkProductIsActive(productId) {
+        const product =  ProductPersistence.getById(productId);
+        if (!product || !product.isActive) {
+            throw new IllegalArgumentError(PRODUCT_NOT_ACTIVE_ERR);
         }
-    } 
+    }
+
+    #assertIsNotAutomated(orderId) {
+        const order = this.#orderPersistence.getById(orderId);
+        if (!order.isAutomated) {
+            throw new IllegalArgumentError(INVALID_DELETE_AUTOMATED_ERR);
+        }
+    }
+
+    #assertProductExist(productId){
+        const product =  ProductPersistence.getById(productId);
+        if (product == null){
+            throw new IllegalArgumentError(INVALID_PRODUCT_EXIST);   
+        }
+    }
 }
 
 export default OrderService;
