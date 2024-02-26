@@ -10,6 +10,7 @@ sap.ui.define(
             /* Messages and titles */
             APP_TITLE: "Inventory Service",
             LOADING_TITLE: "Loading",
+            ERROR_DIALOG_TITLE: "An error has ocurred",
             LOADING_TEXT: "Please wait..",
             DELETE_CONFIRMATION_MSG: "Are you sure you want to delete this item?",
         };

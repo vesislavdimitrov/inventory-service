@@ -76,7 +76,7 @@ sap.ui.jsview("inventory.view.Home", {
                                 this.createButton(
                                     oController,
                                     undefined,
-                                    oController.onClick,
+                                    oController.onShowProductDetailsPress,
                                     "sap-icon://hint",
                                     "3rem"
                                 ),

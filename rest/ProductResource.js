@@ -7,9 +7,7 @@ const productService = new ProductService();
 
 router.post("/products", async (request, response) => {
     try {
-        response
-            .status(201)
-            .json(await productService.createProduct(request.body));
+        response.status(201).json(await productService.createProduct(request.body));
     } catch (error) {
         handleError(error, response);
     }
@@ -17,11 +15,7 @@ router.post("/products", async (request, response) => {
 
 router.get("/products/:productId", async (request, response) => {
     try {
-        response
-            .status(200)
-            .json(
-                await productService.getProductById(request.params.productId)
-            );
+        response.status(200).json(await productService.getProductById(request.params.productId));
     } catch (error) {
         handleError(error, response);
     }
@@ -37,14 +31,7 @@ router.get("/products", async (request, response) => {
 
 router.put("/products/:productId", async (request, response) => {
     try {
-        response
-            .status(200)
-            .json(
-                await productService.updateProduct(
-                    request.params.productId,
-                    request.body
-                )
-            );
+        response.status(200).json(await productService.updateProduct(request.params.productId, request.body));
     } catch (error) {
         handleError(error, response);
     }

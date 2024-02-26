@@ -15,9 +15,7 @@ router.post("/orders", async (request, response) => {
 
 router.get("/orders/:orderId", async (request, response) => {
     try {
-        response
-            .status(200)
-            .json(await orderService.getOrderById(request.params.orderId));
+        response.status(200).json(await orderService.getOrderById(request.params.orderId));
     } catch (error) {
         handleError(error, response);
     }
@@ -33,14 +31,7 @@ router.get("/orders", async (request, response) => {
 
 router.put("/orders/:orderId", async (request, response) => {
     try {
-        response
-            .status(200)
-            .json(
-                await orderService.updateOrder(
-                    request.params.orderId,
-                    request.body
-                )
-            );
+        response.status(200).json(await orderService.updateOrder(request.params.orderId, request.body));
     } catch (error) {
         handleError(error, response);
     }

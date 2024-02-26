@@ -26,9 +26,14 @@ sap.ui.define(
                         this.getView().setModel(new JSONModel(data), "productModel");
                     }.bind(this),
                     function (error) {
-                        console.error("Error fetching data:", error); //no
+                        Dialogs.createErrorDialog(error.error);
                     }
                 );
+            },
+
+            onShowProductDetailsPress: function (oEvent) {
+                const oSelectedItem = oEvent.getSource().getBindingContext("productModel").getObject();
+                Dialogs.createProductDetailsDialog(oSelectedItem);
             },
 
             onDeleteProductPress: function (oEvent) {
@@ -42,7 +47,7 @@ sap.ui.define(
                         null,
                         that.refreshProductsModel(oView, sProductId),
                         function (error) {
-                            console.error("Error ", error);
+                            Dialogs.createErrorDialog(error.error);
                         }
                     );
                 });

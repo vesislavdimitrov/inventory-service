@@ -5,7 +5,7 @@ import cors from "cors";
 import sequelize from "./db/DbConnection.js";
 import { readFile } from "./utils/FsUtils.js";
 import productResource from "./rest/ProductResource.js";
-import orderResource from "./rest/OrderResource.js"
+import orderResource from "./rest/OrderResource.js";
 
 const app = express();
 const port = 3000;
@@ -38,9 +38,7 @@ async function initializeDatabase() {
  */
 async function _executeInitScript() {
     const initScript = readFile(join("", "db", "init.sql"), "utf-8");
-    const queries = initScript
-        .split(";")
-        .filter((query) => query.trim() !== "");
+    const queries = initScript.split(";").filter((query) => query.trim() !== "");
 
     for (const query of queries) {
         try {

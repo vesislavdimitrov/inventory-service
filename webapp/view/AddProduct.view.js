@@ -26,7 +26,7 @@ sap.ui.jsview("inventory.view.AddProduct", {
                 this.createSwitch("{/isActive}", LABEL_ACTIVITY_STATE)
             ),
             this.createButton(oController, ADD_BUTTON_TXT, oController.onAddProductPress, sap.m.ButtonType.Emphasized),
-            this.createButton(oController, CANCEL_BUTTON_TXT, oController.navigateToHome, sap.m.ButtonType.Reject)
+            this.createButton(oController, CANCEL_BUTTON_TXT, oController.navigateToHome, sap.m.ButtonType.Up)
         );
     },
 

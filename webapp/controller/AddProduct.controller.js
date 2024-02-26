@@ -6,8 +6,9 @@ sap.ui.define(
         "sap/ui/core/UIComponent",
         "inventory/utils/Constants",
         "inventory/utils/Http",
+        "inventory/utils/Dialogs",
     ],
-    function (Controller, MessageToast, JSONModel, UIComponent, Constants, Http) {
+    function (Controller, MessageToast, JSONModel, UIComponent, Constants, Http, Dialogs) {
         "use strict";
 
         return Controller.extend("inventory.controller.AddProduct", {
@@ -30,8 +31,7 @@ sap.ui.define(
             },
 
             dateToEpoch: function (sDate) {
-                const [day, month, year] = sDate.split("/");
-                return new Date(`${year}-${month}-${day}`).getTime();
+                return Date.parse(sDate) / 1000;
             },
 
             getModelData: function () {
@@ -49,8 +49,7 @@ sap.ui.define(
                         that.navigateToHome();
                     },
                     function (error) {
-                        MessageToast.show("Failed to add product. Please try again.");
-                        console.error("Error:", error); //no
+                        Dialogs.createErrorDialog(error.error);
                     }
                 );
             },
