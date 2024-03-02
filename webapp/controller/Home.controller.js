@@ -6,8 +6,9 @@ sap.ui.define(
         "inventory/utils/Constants",
         "inventory/utils/Http",
         "inventory/utils/Dialogs",
+        "sap/m/MessageToast",
     ],
-    function (Controller, JSONModel, UIComponent, Constants, Http, Dialogs) {
+    function (Controller, JSONModel, UIComponent, Constants, Http, Dialogs, MessageToast) {
         "use strict";
 
         return Controller.extend("inventory.controller.Home", {
@@ -18,6 +19,20 @@ sap.ui.define(
             },
 
             onLoadProducts: function () {
+                Http.sendAjaxRequestWith(
+                    Constants.PRODUCTS_URL,
+                    "GET",
+                    null,
+                    function (data) {
+                        this.getView().setModel(new JSONModel(data), "productModel");
+                    }.bind(this),
+                    function (error) {
+                        Dialogs.createErrorDialog(error.error);
+                    }
+                );
+            },
+
+            onLoadProducts2: function () {
                 Http.sendAjaxRequestWith(
                     Constants.PRODUCTS_URL,
                     "GET",
@@ -45,24 +60,33 @@ sap.ui.define(
                         `${Constants.PRODUCTS_URL}/${sProductId}`,
                         "DELETE",
                         null,
-                        that.refreshProductsModel(oView, sProductId),
+                        function () {
+                            that.onSuccessfulDelete(oView, sProductId);
+                        },
                         function (error) {
                             Dialogs.createErrorDialog(error.error);
                         }
                     );
                 });
             },
-
+            
+            onSuccessfulDelete: function (oView, sProductId) {
+                this.refreshProductsModel(oView, sProductId);
+                this.showSuccessToast(Constants.PRODUCT_DELETED_SUCCESS_MSG);
+            },
+            
             refreshProductsModel: function (oView, sProductId) {
-                return function () {
-                    const oProductModel = oView.getModel("productModel");
-                    oProductModel.setData(
-                        oProductModel.getData().filter(function (product) {
-                            return product.id !== sProductId;
-                        })
-                    );
-                    sap.ui.getCore().byId("table").getBinding("items").refresh();
-                };
+                const oProductModel = oView.getModel("productModel");
+                oProductModel.setData(
+                    oProductModel.getData().filter(function (product) {
+                        return product.id !== sProductId;
+                    })
+                );
+                sap.ui.getCore().byId("table").getBinding("items").refresh();
+            },
+            
+            showSuccessToast: function (message) {
+                sap.m.MessageToast.show(message);
             },
         });
     }

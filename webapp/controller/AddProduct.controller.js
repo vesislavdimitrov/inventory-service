@@ -1,14 +1,13 @@
 sap.ui.define(
     [
         "sap/ui/core/mvc/Controller",
-        "sap/m/MessageToast",
         "sap/ui/model/json/JSONModel",
         "sap/ui/core/UIComponent",
         "inventory/utils/Constants",
         "inventory/utils/Http",
         "inventory/utils/Dialogs",
     ],
-    function (Controller, MessageToast, JSONModel, UIComponent, Constants, Http, Dialogs) {
+    function (Controller, JSONModel, UIComponent, Constants, Http, Dialogs) {
         "use strict";
 
         return Controller.extend("inventory.controller.AddProduct", {
@@ -24,14 +23,21 @@ sap.ui.define(
                         serialNumber: oProduct.serialNumber,
                         mahName: oProduct.mahName,
                         quantity: oProduct.quantity,
-                        expiryDate: this.dateToEpoch(oProduct.expiryDate),
+                        expiryDate: this.dateToTimestamp(oProduct.expiryDate),
                         isActive: oProduct.isActive,
                     })
                 );
             },
 
-            dateToEpoch: function (sDate) {
-                return Date.parse(sDate) / 1000;
+            dateToTimestamp: function (sDate) {
+                const parts = sDate.split("/");
+                const timestamp =
+                    new Date(
+                        parseInt(parts[2], 10) + 2000,
+                        parseInt(parts[0], 10) - 1,
+                        parseInt(parts[1], 10)
+                    ).getTime();
+                return timestamp;
             },
 
             getModelData: function () {
@@ -45,7 +51,6 @@ sap.ui.define(
                     "POST",
                     oProduct,
                     function () {
-                        MessageToast.show("Product added successfully!");
                         that.navigateToHome();
                     },
                     function (error) {
