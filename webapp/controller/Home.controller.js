@@ -32,20 +32,6 @@ sap.ui.define(
                 );
             },
 
-            onLoadProducts2: function () {
-                Http.sendAjaxRequestWith(
-                    Constants.PRODUCTS_URL,
-                    "GET",
-                    null,
-                    function (data) {
-                        this.getView().setModel(new JSONModel(data), "productModel");
-                    }.bind(this),
-                    function (error) {
-                        Dialogs.createErrorDialog(error.error);
-                    }
-                );
-            },
-
             onShowProductDetailsPress: function (oEvent) {
                 const oSelectedItem = oEvent.getSource().getBindingContext("productModel").getObject();
                 Dialogs.createProductDetailsDialog(oSelectedItem);
