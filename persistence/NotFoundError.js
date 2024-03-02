@@ -1,5 +1,4 @@
-const NOT_FOUND_ERR = (entityType, id) =>
-    `${entityType} with ID ${id} not found.`;
+const NOT_FOUND_ERR = (entityType, id) => `${entityType} with ID ${id} not found.`;
 
 class NotFound extends Error {
     constructor(entityType, id) {

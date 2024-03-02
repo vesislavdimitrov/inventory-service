@@ -16,9 +16,7 @@ class ProductService {
         this.#assertNoEmptyArgs(product);
         this.#assertValidExpiryDate(product.expiryDate);
         this.#assertValidQuantity(product.quantity);
-        return await this.#productPersistence.create(
-            this.#buildProductObject(product)
-        );
+        return await this.#productPersistence.create(this.#buildProductObject(product));
     }
 
     async getProductById(productId) {
