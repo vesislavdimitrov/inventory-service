@@ -28,6 +28,10 @@ class OrderPersistence extends Persistence {
         this.assertExists(order, orderId, Order.entityName);
         await order.destroy();
     }
+
+    async getByProductId(productId) {
+        return await Order.findAll({ where: { productId } });
+    }
 }
 
 export default OrderPersistence;

@@ -25,6 +25,7 @@ const Order = sequelize.define(
         isAutomated: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
+            defaultValue: false
         },
         timestampCreated: {
             type: DataTypes.BIGINT,

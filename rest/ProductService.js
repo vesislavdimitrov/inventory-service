@@ -1,15 +1,20 @@
 import ProductPersistence from "../persistence/ProductPersistence.js";
+import OrderPersistence from "../persistence/OrderPersistence.js";
 import IllegalArgumentError from "./IllegalArgumentError.js";
 
 const EMPTY_ARGUMENT_ERR = "Body contains an empty argument!";
 const INVALID_EXPIRY_DATE_ERR = "Expiry date is in the past!";
 const INVALID_QUANTITY_ERR = "Quantity cannot be less than 0!";
+const DELETE_WITH_ASSOCIATED_ORDERS_ERR = "Product is present in an order!";
+const DELETE_ACTIVE_ERR = "Product is active!";
 
 class ProductService {
     #productPersistence;
+    #orderPersistence;
 
     constructor() {
         this.#productPersistence = new ProductPersistence();
+        this.#orderPersistence = new OrderPersistence();
     }
 
     async createProduct(product) {
@@ -35,6 +40,8 @@ class ProductService {
     }
 
     async deleteProduct(productId) {
+        await this.#assertInactive(productId);
+        await this.#assertNoAssociatedOrders(productId);
         await this.#productPersistence.delete(productId);
     }
 
@@ -81,10 +88,18 @@ class ProductService {
         }
     }
 
-    /**
-     * TODO
-     * Validate serial numbers
-     */
+    async #assertInactive(productId) {
+        if(await this.#productPersistence.getById(productId).isActive) {
+            throw new IllegalArgumentError(DELETE_ACTIVE_ERR);
+        }
+    }
+
+    async #assertNoAssociatedOrders(productId) {
+        const order = await this.#orderPersistence.getByProductId(productId);
+        if (order.length !== 0) {
+            throw new IllegalArgumentError(DELETE_WITH_ASSOCIATED_ORDERS_ERR);
+        }
+    }
 }
 
 export default ProductService;
