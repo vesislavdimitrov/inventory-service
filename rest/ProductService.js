@@ -89,7 +89,8 @@ class ProductService {
     }
 
     async #assertInactive(productId) {
-        if(await this.#productPersistence.getById(productId).isActive) {
+        const product = await this.#productPersistence.getById(productId);
+        if(product.isActive) {
             throw new IllegalArgumentError(DELETE_ACTIVE_ERR);
         }
     }
