@@ -1,9 +1,9 @@
+jQuery.sap.require("inventory.utils.Constants");
+
 const EDIT_PAGE_NAME_TXT = "Edit an existing product";
-const SAVE_BUTTON_TXT = "Save Changes";
-const CANCEL_BUTTON_TXT_EDIT = "Cancel";
-const LABEL_MANUFACTURER_EDIT = "Manufacturer";
-const LABEL_ACTIVITY_STATE_EDIT = "Active State";
-const INPUT_WIDTH_EDIT = "33rem";
+const EDIT_SAVE_BUTTON_TXT = "Save Changes";
+const EDIT_CANCEL_BUTTON_TXT = "Cancel";
+const EDIT_INPUT_WIDTH = "33rem";
 
 sap.ui.jsview("inventory.view.EditProduct", {
     getControllerName: function () {
@@ -12,14 +12,21 @@ sap.ui.jsview("inventory.view.EditProduct", {
 
     createContent: function (oController) {
         return this.createPage(
-            this.createForm(),
+            this.createForm(
+                this.createInput("{/id}", EDIT_INPUT_WIDTH, false, null, null, false),
+                this.createInput("{/name}", EDIT_INPUT_WIDTH, false),
+                this.createInput("{/serialNumber}", EDIT_INPUT_WIDTH),
+                this.createInput("{/mahName}", EDIT_INPUT_WIDTH),
+                this.createInput("{/quantity}", EDIT_INPUT_WIDTH),
+                this.createSwitch("{/isActive}", inventory.utils.Constants.ACTIVITY_STATE)
+            ),
             this.createButton(
                 oController,
-                SAVE_BUTTON_TXT,
+                EDIT_SAVE_BUTTON_TXT,
                 oController.onSaveChangesPress,
                 sap.m.ButtonType.Emphasized
             ),
-            this.createButton(oController, CANCEL_BUTTON_TXT_EDIT, oController.navigateToHome, sap.m.ButtonType.Up)
+            this.createButton(oController, EDIT_CANCEL_BUTTON_TXT, oController.navigateToHome, sap.m.ButtonType.Up)
         );
     },
 
@@ -41,43 +48,47 @@ sap.ui.jsview("inventory.view.EditProduct", {
     },
 
     createForm: function (
+        oInputEditedId,
         oInputEditedName,
         oInputEditedSerialNumber,
         oInputEditedMahName,
         oInputEditedQuantity,
-        oInputEditedExpiryDate,
         oInputEditedIsActive
     ) {
         return new sap.ui.layout.form.SimpleForm({
-            content: [],
+            content: [
+                new sap.m.Label({ text: inventory.utils.Constants.LABEL_PRODUCT_ID }),
+                oInputEditedId,
+                new sap.m.Label({ text: inventory.utils.Constants.LABEL_PRODUCT_NAME }),
+                oInputEditedName,
+                new sap.m.Label({ text: inventory.utils.Constants.LABEL_SERIAL_NUMBER }),
+                oInputEditedSerialNumber,
+                new sap.m.Label({ text: inventory.utils.Constants.LABEL_MANUFACTURER }),
+                oInputEditedMahName,
+                new sap.m.Label({ text: inventory.utils.Constants.LABEL_QUANTITY }),
+                oInputEditedQuantity,
+                new sap.m.Label({ text: inventory.utils.Constants.LABEL_ACTIVITY_STATE }),
+                oInputEditedIsActive,
+            ],
         });
     },
 
-    createInput: function (oValue, sWidth, bRequired, oPlaceholder, oType) {
+    createInput: function (oValue, sWidth, bRequired, oPlaceholder, oType, bEditable) {
         return new sap.m.Input({
             value: oValue,
             width: sWidth,
             required: bRequired,
             placeholder: oPlaceholder,
             type: oType,
-        });
-    },
-
-    createDatePicker: function (sValue, sWidth, sFormat, bRequired, sLabel) {
-        return new sap.m.DatePicker({
-            value: sValue,
-            width: sWidth,
-            required: bRequired,
-            displayFormat: sFormat,
-            ariaLabelledBy: sLabel,
+            enabled: bEditable,
         });
     },
 
     createSwitch: function (sValue, sLabel) {
         return new sap.m.Switch({
             state: sValue,
-            customTextOn: "✔️",
-            customTextOff: "❌",
+            customTextOn: inventory.utils.Constants.CHECKMARK_EMOJI,
+            customTextOff: inventory.utils.Constants.CROSS_EMOJI,
             ariaLabelledBy: sLabel,
         });
     },

@@ -30,16 +30,21 @@ sap.ui.define(
                     "GET",
                     null,
                     function (data) {
-                        data.forEach(function (product) {
-                            //the emoji code dream??
-                            product.isActive = product.isActive ? "✅" : "❌";
-                        });
-                        this.getView().setModel(new JSONModel(data), "productModel");
+                        this.getView().setModel(new JSONModel(this.getSortedModel(data)), "productModel");
                     }.bind(this),
                     function (error) {
                         Dialogs.createErrorDialog(error.error);
                     }
                 );
+            },
+
+            getSortedModel: function (oModelData) {
+                oModelData
+                    .sort((a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase()))
+                    .forEach(function (product) {
+                        product.isActive = product.isActive ? Constants.CHECKMARK_EMOJI : Constants.CROSS_EMOJI;
+                    });
+                return oModelData;
             },
 
             onShowProductDetailsPress: function (oEvent) {

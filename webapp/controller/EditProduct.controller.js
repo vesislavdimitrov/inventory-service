@@ -33,6 +33,25 @@ sap.ui.define(
                 );
             },
 
+            onSaveChangesPress: function () {
+                this.putProduct(this.getView().getModel().getData());
+            },
+
+            putProduct: function (oProduct) {
+                const that = this;
+                Http.sendAjaxRequestWith(
+                    `${Constants.PRODUCTS_URL}/${oProduct.id}`,
+                    "PUT",
+                    JSON.stringify(oProduct),
+                    function () {
+                        that.navigateToHome();
+                    },
+                    function (error) {
+                        Dialogs.createErrorDialog(error.error);
+                    }
+                );
+            },
+
             navigateToHome: function () {
                 this.getView().getModel().setData({});
                 UIComponent.getRouterFor(this).navTo("home");

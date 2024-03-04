@@ -1,14 +1,10 @@
+jQuery.sap.require("inventory.utils.Constants");
+
 const ADD_PAGE_NAME_TXT = "Add a new product";
 const ADD_BUTTON_TXT = "Add product";
-const CANCEL_BUTTON_TXT = "Cancel";
-const LABEL_NAME = "Name";
-const LABEL_SERIAL_NUMBER = "Serial number";
-const PLACEHOLDER_QUANTITY = "Number";
-const LABEL_MANUFACTURER = "Manufacturer";
-const LABEL_QUANTITY = "Quantity";
-const LABEL_EXPIRY_DATE = "Expiry date";
-const LABEL_ACTIVITY_STATE = "Active";
-const INPUT_WIDTH = "33rem";
+const ADD_CANCEL_BUTTON_TXT = "Cancel";
+const ADD_INPUT_WIDTH = "33rem";
+const ADD_PLACEHOLDER_QUANTITY = "Number";
 
 sap.ui.jsview("inventory.view.AddProduct", {
     getControllerName: function () {
@@ -18,15 +14,27 @@ sap.ui.jsview("inventory.view.AddProduct", {
     createContent: function (oController) {
         return this.createPage(
             this.createForm(
-                this.createInput("{/name}", INPUT_WIDTH, true),
-                this.createInput("{/serialNumber}", INPUT_WIDTH, true),
-                this.createInput("{/mahName}", INPUT_WIDTH, true),
-                this.createInput("{/quantity}", INPUT_WIDTH, true, PLACEHOLDER_QUANTITY, sap.m.InputType.Number),
-                this.createDatePicker("{/expiryDate}", INPUT_WIDTH, "yyyy-MM-dd", true, LABEL_EXPIRY_DATE),
-                this.createSwitch("{/isActive}", LABEL_ACTIVITY_STATE)
+                this.createInput("{/name}", ADD_INPUT_WIDTH, true),
+                this.createInput("{/serialNumber}", ADD_INPUT_WIDTH, true),
+                this.createInput("{/mahName}", ADD_INPUT_WIDTH, true),
+                this.createInput(
+                    "{/quantity}",
+                    ADD_INPUT_WIDTH,
+                    true,
+                    ADD_PLACEHOLDER_QUANTITY,
+                    sap.m.InputType.Number
+                ),
+                this.createDatePicker(
+                    "{/expiryDate}",
+                    ADD_INPUT_WIDTH,
+                    "yyyy-MM-dd",
+                    true,
+                    inventory.utils.Constants.EXPIRY_DATE
+                ),
+                this.createSwitch("{/isActive}", inventory.utils.Constants.ACTIVITY_STATE)
             ),
             this.createButton(oController, ADD_BUTTON_TXT, oController.onAddProductPress, sap.m.ButtonType.Emphasized),
-            this.createButton(oController, CANCEL_BUTTON_TXT, oController.navigateToHome, sap.m.ButtonType.Up)
+            this.createButton(oController, ADD_CANCEL_BUTTON_TXT, oController.navigateToHome, sap.m.ButtonType.Up)
         );
     },
 
@@ -57,17 +65,17 @@ sap.ui.jsview("inventory.view.AddProduct", {
     ) {
         return new sap.ui.layout.form.SimpleForm({
             content: [
-                new sap.m.Label({ text: LABEL_NAME }),
+                new sap.m.Label({ text: inventory.utils.Constants.LABEL_PRODUCT_NAME }),
                 oInputName,
-                new sap.m.Label({ text: LABEL_SERIAL_NUMBER }),
+                new sap.m.Label({ text: inventory.utils.Constants.LABEL_SERIAL_NUMBER }),
                 oInputSerialNumber,
-                new sap.m.Label({ text: LABEL_MANUFACTURER }),
+                new sap.m.Label({ text: inventory.utils.Constants.LABEL_MANUFACTURER }),
                 oInputMahName,
-                new sap.m.Label({ text: LABEL_QUANTITY }),
+                new sap.m.Label({ text: inventory.utils.Constants.LABEL_QUANTITY }),
                 oInputQuantity,
-                new sap.m.Label({ text: LABEL_EXPIRY_DATE }),
+                new sap.m.Label({ text: inventory.utils.Constants.LABEL_EXPIRY_DATE }),
                 oInputExpiryDate,
-                new sap.m.Label({ text: LABEL_ACTIVITY_STATE }),
+                new sap.m.Label({ text: inventory.utils.Constants.LABEL_ACTIVITY_STATE }),
                 oInputIsActive,
             ],
         });
@@ -95,9 +103,8 @@ sap.ui.jsview("inventory.view.AddProduct", {
     createSwitch: function (sValue) {
         return new sap.m.Switch({
             state: sValue,
-            // THE EMOJI CODE DREAM ?!
-            customTextOn: "✔️",
-            customTextOff: "❌",
+            customTextOn: inventory.utils.Constants.CHECKMARK_EMOJI,
+            customTextOff: inventory.utils.Constants.CROSS_EMOJI,
         });
     },
 
