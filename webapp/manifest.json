@@ -54,6 +54,10 @@
                 "addProduct": {
                     "pattern": "add-product",
                     "target": "addProduct"
+                },
+                "editProduct": {
+                    "pattern": "edit-product/{productId}",
+                    "target": "editProduct"
                 }
             },
             "targets": {
@@ -62,6 +66,9 @@
                 },
                 "addProduct": {
                     "name": "AddProduct"
+                },
+                "editProduct": {
+                    "name": "EditProduct"
                 }
             },
             "config": {

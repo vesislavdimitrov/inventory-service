@@ -30,14 +30,14 @@ sap.ui.define(
             },
 
             dateToTimestamp: function (sDate) {
+                if (!sDate) return;
+
                 const parts = sDate.split("/");
-                const timestamp =
-                    new Date(
-                        parseInt(parts[2], 10) + 2000,
-                        parseInt(parts[0], 10) - 1,
-                        parseInt(parts[1], 10)
-                    ).getTime();
-                return timestamp;
+                return new Date(
+                    parseInt(parts[2], 10) + 2000,
+                    parseInt(parts[0], 10) - 1,
+                    parseInt(parts[1], 10)
+                ).getTime();
             },
 
             getModelData: function () {

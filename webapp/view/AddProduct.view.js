@@ -1,4 +1,4 @@
-const PAGE_NAME_TXT = "Add a new product";
+const ADD_PAGE_NAME_TXT = "Add a new product";
 const ADD_BUTTON_TXT = "Add product";
 const CANCEL_BUTTON_TXT = "Cancel";
 const LABEL_NAME = "Name";
@@ -32,7 +32,7 @@ sap.ui.jsview("inventory.view.AddProduct", {
 
     createPage: function (oForm, oAddButton, oCancelButton) {
         return new sap.m.Page({
-            title: PAGE_NAME_TXT,
+            title: ADD_PAGE_NAME_TXT,
             titleAlignment: sap.m.TitleAlignment.Center,
             content: [
                 new sap.m.FlexBox({

@@ -18,12 +18,22 @@ sap.ui.define(
                 UIComponent.getRouterFor(this).navTo("addProduct");
             },
 
+            onEditProductPress: function (oEvent) {
+                UIComponent.getRouterFor(this).navTo("editProduct", {
+                    productId: oEvent.getSource().getBindingContext("productModel").getProperty("id"),
+                });
+            },
+
             onLoadProducts: function () {
                 Http.sendAjaxRequestWith(
                     Constants.PRODUCTS_URL,
                     "GET",
                     null,
                     function (data) {
+                        data.forEach(function (product) {
+                            //the emoji code dream??
+                            product.isActive = product.isActive ? "✅" : "❌";
+                        });
                         this.getView().setModel(new JSONModel(data), "productModel");
                     }.bind(this),
                     function (error) {
@@ -55,12 +65,12 @@ sap.ui.define(
                     );
                 });
             },
-            
+
             onSuccessfulDelete: function (oView, sProductId) {
                 this.refreshProductsModel(oView, sProductId);
                 this.showSuccessToast(Constants.PRODUCT_DELETED_SUCCESS_MSG);
             },
-            
+
             refreshProductsModel: function (oView, sProductId) {
                 const oProductModel = oView.getModel("productModel");
                 oProductModel.setData(
@@ -70,9 +80,9 @@ sap.ui.define(
                 );
                 sap.ui.getCore().byId("table").getBinding("items").refresh();
             },
-            
+
             showSuccessToast: function (message) {
-                sap.m.MessageToast.show(message);
+                MessageToast.show(message);
             },
         });
     }

@@ -12,6 +12,7 @@ sap.ui.jsview("inventory.view.Home", {
     },
 
     createContent: function (oController) {
+        oController.onLoadProducts();
         return this.createPage(this.createToolbar(oController), this.createProductsTable(oController));
     },
 
@@ -84,7 +85,7 @@ sap.ui.jsview("inventory.view.Home", {
                                 this.createButton(
                                     oController,
                                     undefined,
-                                    oController.onClick,
+                                    oController.onEditProductPress,
                                     "sap-icon://edit",
                                     "3rem"
                                 ),
