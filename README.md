@@ -23,3 +23,13 @@ To get the Inventory Management Service up and running, follow these simple step
    ```bash
    docker-compose up --build
    ```
+
+## Booting up the Web UI
+
+The web UI is not a part of the docker-compose setup and has to be run separately, any web server can be used (e.g. nginx).
+An internet connection is required even for localhost setups since the OpenUI5 libraries are being dynamically loaded through a script in the index.html.
+
+
+
+## 
+Developed as an universiy assignment by Vesislav Dimitrov (2024)
